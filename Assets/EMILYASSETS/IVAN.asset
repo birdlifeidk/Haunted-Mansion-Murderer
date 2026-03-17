@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: IVAN
   m_EditorClassIdentifier: Assembly-CSharp::HeneGames.DialogueSystem.DialogueCharacter
   characterPhoto: {fileID: 21300000, guid: 8523d83248cce8d4da1fa5af325ef4f9, type: 3}
-  characterName: Ivan
+  characterName: Elder Ivan
