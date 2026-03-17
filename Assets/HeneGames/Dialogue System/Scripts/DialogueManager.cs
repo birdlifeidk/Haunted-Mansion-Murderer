@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using StarterAssets;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -11,8 +13,8 @@ namespace HeneGames.DialogueSystem
     private float coolDownTimer;
     private bool dialogueIsOn;
     private DialogueTrigger dialogueTrigger;
-    public Transform teleportBack; 
 
+    public GameObject goBackPlatform;
     private bool dialogueDone; 
 
     // NEW: track if player is inside the trigger
@@ -38,7 +40,6 @@ namespace HeneGames.DialogueSystem
 
     private void Update()
     {
-       
 
         // Timer
         if (coolDownTimer > 0f)
@@ -102,14 +103,25 @@ namespace HeneGames.DialogueSystem
     }
 
     public void StartDialogue()
-        {
+    {
             if(dialogueTrigger != null)
             {
                 dialogueTrigger.startDialogueEvent.Invoke();
             }
+            
+            if (goBackPlatform != null)
+            {
+                goBackPlatform.SetActive(true);
+            }
+
+            StarterAssetsInputs playerInput = GetComponent<StarterAssetsInputs>();
+            if (playerInput != null)
+            {
+                playerInput.enabled = false;
+            }
 
             currentSentence = 0;
-
+            
             ShowCurrentSentence();
 
             PlaySound(sentences[currentSentence].sentenceSound);
@@ -160,6 +172,12 @@ namespace HeneGames.DialogueSystem
             {
                 dialogueTrigger.endDialogueEvent.Invoke();
             }
+            StarterAssetsInputs playerInput = GetComponent<StarterAssetsInputs>();
+            
+            if (playerInput != null)
+            {
+                playerInput.enabled = true;
+            }
 
             DialogueUI.instance.ClearText();
 
@@ -168,6 +186,7 @@ namespace HeneGames.DialogueSystem
                 audioSource.Stop();
             }
 
+          
             dialogueDone = true;
 
 
